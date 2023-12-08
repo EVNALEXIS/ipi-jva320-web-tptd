@@ -21,10 +21,12 @@ public class DataInitService implements CommandLineRunner {
         if (this.salarieAideADomicileService.countSalaries() != 0) {
             return;
         }
-
+        /*
         SalarieAideADomicile s1 = this.salarieAideADomicileService.creerSalarieAideADomicile(
                 new SalarieAideADomicile("Jean", LocalDate.parse("2022-12-05"), LocalDate.parse("2022-12-05"),
                         20, 0,
                         80, 10, 1));
+                        */
+
     }
 }
