@@ -4,6 +4,9 @@ import com.ipi.jva320.exception.SalarieException;
 import com.ipi.jva320.model.SalarieAideADomicile;
 import com.ipi.jva320.service.SalarieAideADomicileService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
@@ -32,13 +35,13 @@ public class SalarieController {
     }
 
     @PostMapping(value = "/save")
-    public String creerSalarie(SalarieAideADomicile sad) throws SalarieException {
+    public String createSalarie(SalarieAideADomicile sad) throws SalarieException {
         salarieAideADomicileService.creerSalarieAideADomicile(sad);
         return "redirect:/salaries/" + sad.getId();
     }
 
     @PostMapping(value = "/modif/{id}")
-    public String modifSalarie(@PathVariable Long id, @ModelAttribute SalarieAideADomicile salarieAideADomicile) throws SalarieException {
+    public String updateSalarie(@PathVariable Long id, @ModelAttribute SalarieAideADomicile salarieAideADomicile) throws SalarieException {
 
         SalarieAideADomicile newSalarie = salarieAideADomicileService.getSalarie(id);
 
@@ -79,9 +82,29 @@ public class SalarieController {
 
     }
 
+
+    //La limitation par page fonctionne, 10 salariés par page
+
+    //Le tri fonctionne uniquement lors du premier click (ASC -> DESC) mais lors du second (DESC -> ASC)
+
+    // Pagination, presque OK, la page par défaut (avec les salarié en dur) est accessible en appuyant sur suivant
+
     @GetMapping
-    public String list(ModelMap mp) {
-        mp.put("listSalarie", salarieAideADomicileService.getSalaries());
+    public String listSalaries(
+            @RequestParam(name = "page", defaultValue = "0") int page,
+            @RequestParam(name = "size", defaultValue = "10") int size,
+            @RequestParam(name = "sortDirection", defaultValue = "ASC") String sortDirection,
+            @RequestParam(name = "sortProperty", defaultValue = "nom") String sortProperty,
+            ModelMap mp
+    ) {
+        PageRequest pageRequest = PageRequest.of(page, size, Sort.Direction.fromString(sortDirection), sortProperty);
+        Page<SalarieAideADomicile> salariesPage = salarieAideADomicileService.getSalaries(pageRequest);
+
+        mp.put("listSalarie", salariesPage.getContent());
+        mp.put("currentPage", salariesPage.getNumber());
+        mp.put("totalPages", salariesPage.getTotalPages());
+        mp.put("totalItems", salariesPage.getTotalElements());
+
         return "list";
     }
 

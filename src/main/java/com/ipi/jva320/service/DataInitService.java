@@ -1,11 +1,8 @@
 package com.ipi.jva320.service;
 
-import com.ipi.jva320.model.SalarieAideADomicile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
-
-import java.time.LocalDate;
 
 /**
  * Ajoute des données de test si vide au démarrage
@@ -19,7 +16,6 @@ public class DataInitService implements CommandLineRunner {
     @Override
     public void run(String... argv) throws Exception {
         if (this.salarieAideADomicileService.countSalaries() != 0) {
-            return;
         }
         /*
         SalarieAideADomicile s1 = this.salarieAideADomicileService.creerSalarieAideADomicile(

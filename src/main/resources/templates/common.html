@@ -1,9 +1,11 @@
 <div th:fragment="head">
     <!DOCTYPE html>
-    <head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <head>
+        <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
         <title>Gestion des salariés</title>
-        <link rel="stylesheet" href="/static/bootstrap.min.css">
-        <link rel="stylesheet" href="./static/font-awesome.css">
+        <link href="/static/bootstrap.min.css" rel="stylesheet">
+        <link href="./static/font-awesome.css" rel="stylesheet">
+
     </head>
 </div>
 
@@ -12,20 +14,25 @@
 <div class="nav-div" th:fragment="menu">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <a class="navbar-brand" href="http://localhost:8080/">Gestion des salariés</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <button aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler"
+                data-target="#navbarSupportedContent" data-toggle="collapse" type="button">
             <span class="navbar-toggler-icon"></span>
         </button>
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
-                <li><a href="http://localhost:8080/salaries?page=0&amp;size=10&amp;sortProperty=nom&amp;sortDirection=ASC" class="nav-link">Liste des salariés <span class="badge badge-primary" th:text="${nbSalarie}"></span></a></li>
+                <li>
+                    <a class="nav-link"
+                       href="http://localhost:8080/salaries?page=0&amp;size=10&amp;sortProperty=nom&amp;sortDirection=ASC">Liste des salariés <span class="badge badge-primary"
+                                                                 th:text="${nbSalarie}"></span></a></li>
             </ul>
 
-            <form class="form-inline my-2 my-lg-0" role="search" th:action="@{/salaries}" method="GET">
+            <form class="form-inline my-2 my-lg-0" method="GET" role="search" th:action="@{/salaries}">
                 <div class="form-group form-inline">
-                    <input name="nom" class="form-control" placeholder="Rechercher un nom" type="text" th:value="${nom}">
+                    <input class="form-control" name="nom" placeholder="Rechercher un nom" th:value="${nom}"
+                           type="text">
                 </div>
-                <button type="submit" class="btn btn-outline-success ml-2 my-2 my-sm-0">Rechercher</button>
+                <button class="btn btn-outline-success ml-2 my-2 my-sm-0" type="submit">Rechercher</button>
             </form>
         </div>
     </nav>
