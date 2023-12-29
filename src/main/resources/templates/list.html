@@ -3,65 +3,68 @@
 
 <div class="container" th:insert="~{common::menu}"></div>
 <div class="container">
-  <div class="row">
-    <div class="col-lg-12">
-      <h1>Liste des salariés</h1>
-      <a href="/salaries/aide/new" class="btn btn-primary">Nouveau salarié</a>
-      <table class="table table-hover table-striped">
-        <thead>
-        <tr>
-          <th scope="col">ID
-            <a href="/salaries?page=0&size=10&sortProperty=id&sortDirection=DESC"><i class="fa fa-chevron-up"></i></a>
-          </th>
-          <th scope="col">Nom
-            <a href="/salaries?page=0&size=10&sortProperty=nom&sortDirection=DESC"><i class="fa fa-chevron-up"></i></a>
-          </th>
-          <th scope="col"></th>
-        </tr>
-        </thead>
-        <tbody>
-        <th:block th:if="${list_salarie.isEmpty() and resultatRecherche.isEmpty()}">
-          <tr>
-            <th scope="row">1</th>
-            <td>Jeanne Dupond</td>
-            <td><a href="/salaries/aide/2" class="btn btn-primary ember-view">Détail</a></td>
-          </tr>
-          <tr>
-            <th scope="row">2</th>
-            <td>Robert Martin</td>
-            <td><a href="/salaries/aide/3" class="btn btn-primary ember-view">Détail</a></td>
-          </tr>
-        </th:block >
-        <th:block th:if="${not list_salarie.isEmpty() and resultatRecherche.isEmpty()}">
-          <tr th:each="salarie : ${list_salarie}">
-            <th scope="row" th:text="${salarie.id}"></th>
-            <td th:text="${salarie.nom}"></td>
-            <td><a th:href="@{/salaries/{salarie}(salarie=${salarie.id})}" class="btn btn-primary ember-view">Détail</a></td>
-          </tr>
-          </th:block >
-        <th:block th:if="${not list_salarie.isEmpty() and not resultatRecherche.isEmpty()}">
-          <tr th:each="recherche : ${resultatRecherche}">
-            <th scope="row" th:text="${recherche.id}"></th>
-            <td th:text="${recherche.nom}"></td>
-            <td><a th:href="@{/salaries/{recherche}(recherche=${recherche.id})}" class="btn btn-primary ember-view">Détail</a></td>
-          </tr>
-        </th:block >
-        </tbody>
-      </table>
-      <div class="row">
-        <div class="col-lg-6"><p>Affichage des salariés 1 à 10 sur un total de <span>11</span></p>
+    <div class="row">
+        <div class="col-lg-12">
+            <h1>Liste des salariés</h1>
+            <a class="btn btn-primary" href="/salaries/aide/new">Nouveau salarié</a>
+            <table class="table table-hover table-striped">
+                <thead>
+                <tr>
+                    <th scope="col">ID
+                        <a href="/salaries?page=0&size=10&sortProperty=id&sortDirection=DESC"><i
+                                class="fa fa-chevron-up"></i></a>
+                    </th>
+                    <th scope="col">Nom
+                        <a href="/salaries?page=0&size=10&sortProperty=nom&sortDirection=DESC"><i
+                                class="fa fa-chevron-up"></i></a>
+                    </th>
+                    <th scope="col"></th>
+                </tr>
+                </thead>
+                <tbody>
+                <th:block th:if="${listSalarie.isEmpty()}">
+                    <tr>
+                        <th scope="row">1</th>
+                        <td>Jeanne Dupond</td>
+                        <td><a class="btn btn-primary ember-view" href="">Détail</a></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">2</th>
+                        <td>Robert Martin</td>
+                        <td><a class="btn btn-primary ember-view" href="">Détail</a></td>
+                    </tr>
+                </th:block>
+                <th:block th:if="${not listSalarie.isEmpty()}">
+                    <tr th:each="salarie : ${listSalarie}">
+                        <th scope="row" th:text="${salarie.id}"></th>
+                        <td th:text="${salarie.nom}"></td>
+                        <td><a class="btn btn-primary ember-view"
+                               th:href="@{/salaries/{salarie}(salarie=${salarie.id})}">Détail</a></td>
+                    </tr>
+                </th:block>
+
+                </tbody>
+            </table>
+            <div class="row">
+                <div class="col-lg-6"><p>Affichage des salariés 1 à 10 sur un total de <span
+                        th:text="${nbSalarie}"></span></p>
+                </div>
+                <div class="col-lg-6">
+                    <ul class="pagination">
+                        <li class="page-item disabled">
+                            <a class="page-link"
+                               href="/salaries?page=-1&amp;size=10&amp;sortProperty=nom&amp;sortDirection=ASC">«</a>
+                        </li>
+                        <li><a class="page-link" href="#">Page 1</a></li>
+                        <li class="page-item ">
+                            <a class="page-link"
+                               href="/salaries?page=1&amp;size=10&amp;sortProperty=nom&amp;sortDirection=ASC">»</a></li>
+                    </ul>
+                </div>
+            </div>
         </div>
-        <div class="col-lg-6">
-          <ul class="pagination">
-            <li class="page-item disabled">
-              <a class="page-link" href="/salaries?page=-1&amp;size=10&amp;sortProperty=nom&amp;sortDirection=ASC">«</a>
-            </li>
-            <li><a href="#" class="page-link">Page 1</a></li>
-            <li class="page-item ">
-              <a class="page-link" href="/salaries?page=1&amp;size=10&amp;sortProperty=nom&amp;sortDirection=ASC">»</a></li>
-          </ul></div>
-      </div>
     </div>
-  </div>
 </div>
-</div></body></html>
+</div>
+</body>
+</html>
